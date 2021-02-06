@@ -1,7 +1,13 @@
 #include <iostream>
+#include <unistd.h>
 #include "hello.hpp"
+#include "parseCommandLineOpts.hpp"
 #include "node.hpp"
 #include "tree.hpp"
+
+using namespace std;
+
+int parseCommandLineOpts(int argc, char **argv);
 
 int main(int argc, char **argv)
 {
@@ -10,7 +16,10 @@ int main(int argc, char **argv)
   char fileName[50];
   char str[20];
 
-  if (argc == 1) // ./P0
+  if (parseCommandLineOpts(argc, argv) == -1)
+    return -1;
+
+  if (argc == 1) /*  NOTE - ./P0 or ./P0 < filename  */
   {
     strcpy(str, "- Keyboard - ");
 
@@ -22,7 +31,6 @@ int main(int argc, char **argv)
       fputs(str, fptr);
     }
 
-    // NOTE - this while loop reads in until EOF
     int cnt = 0;
     while (std::cin >> buffer)
     {
@@ -40,7 +48,7 @@ int main(int argc, char **argv)
     strcpy(fileName, "temp.txt");
     fclose(fptr);
   }
-  else if (argc == 2) // ./P0 filename
+  else if (argc == 2) /*  ./P0 filename  */
   {
     int i = 0;
     for (; i < argc; i++)

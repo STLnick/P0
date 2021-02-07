@@ -12,6 +12,7 @@ int main(int argc, char **argv) {
     std::string buffer;
     std::string fileNameToRead;
 
+    /* 1. Process Command Arguments */
     // Parse Command Line Options
     if (parseCommandLineOpts(argc, argv) == -1) {
         std::cout << "Invalid Usage - Terminating" << std::endl;
@@ -63,38 +64,34 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    // Open file to read
-    try {
-        myFile.open(fileNameToRead, std::fstream::in);
-        std::cout << "-> File opened for reading!" << std::endl;
-    }
-    catch (int e) {
-        std::cerr << "Failed to open the file for reading!" << std::endl;
-        return -1;
-    }
+    // TESTING WITH OUTPUT BY OPENING/READING FILE - Open file to read
+//    try {
+//        myFile.open(fileNameToRead, std::fstream::in);
+//        std::cout << "-> File opened for reading!" << std::endl;
+//    }
+//    catch (int e) {
+//        std::cerr << "Failed to open the file for reading!" << std::endl;
+//        return -1;
+//    }
 
     // Read from file
-    std::cout << "- - - - - " << fileNameToRead << " - - - - -" << std::endl;
-    while (myFile >> buffer) {
-        std::cout << buffer << std::endl;
-    }
-    std::cout << "- - - - - - - - - - - - - - - - -" << std::endl;
+//    std::cout << "- - - - - " << fileNameToRead << " - - - - -" << std::endl;
+//    while (myFile >> buffer) {
+//        std::cout << buffer << std::endl;
+//    }
+//    std::cout << "- - - - - - - - - - - - - - - - -" << std::endl;
 
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-    /* !! The 3 Main Tasks as described by Mark in Project description */
-    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-    /* 1. Process Command Arguments */
-    // Here in main()...
+
 
     /* 2. Build the Tree */
     node *root = NULL;
         root = buildTree(fileNameToRead);
 
     /* 3. Traverse the tree 3 different ways */
-    // TODO - outsideFunction() (x3)
-
-
+    printPreorder(root);
+    printInorder(root);
+    printPostorder(root);
 
 
 //    node_t *root = buildTree(file);

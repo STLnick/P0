@@ -5,15 +5,16 @@
 node* insertNode(std::string str, node* treeNode) {
     std::string strBase = str.substr(0, 2);
 
-    // TODO: IF str already exists in 'entries' do nothing!!!
-
     if(treeNode == NULL) {
         treeNode = new node;
         treeNode->base = strBase;
         treeNode->entries.push_back(str);
         treeNode->left = treeNode->right = NULL;
     } else if (strBase == treeNode->base) {
-        treeNode->entries.push_back(str);
+        // Only push str if it's not in vector already
+        if (std::find(treeNode->entries.begin(), treeNode->entries.end(), str) == treeNode->entries.end()) {
+            treeNode->entries.push_back(str);
+        }
     } else if(strBase < treeNode->base) {
         treeNode->left = insertNode(str, treeNode->left);
     } else if(strBase > treeNode->base) {

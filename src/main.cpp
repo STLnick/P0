@@ -100,20 +100,13 @@ int main(int argc, char **argv) {
                 std::cerr << "Error Occurred - unprocessed exception thrown!" << std::endl;
         }
     }
-        root = buildTree(fileNameToRead);
+
 
     /* 3. Traverse the tree 3 different ways */
     printPreorder(root);
     printInorder(root);
     printPostorder(root);
 
-
-//    node_t *root = buildTree(file);
-//    printPreorder(root);
-//    printInorder(root);
-//    printPostorder(root);
-    myFile.close();
-    std::cout << "-> File closed!" << std::endl;
     return 0;
 }
 

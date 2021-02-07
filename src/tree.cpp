@@ -28,24 +28,34 @@ node* buildTree(std::string filename) {
     std::ifstream fileToRead; // File to read strings from
     std::string buffer;       // String buffer to hold data read from file
     node* root = NULL;        // Root node of the Binary Search Tree
+    bool hasContent = false;  // Flag to indicate if file had content
+
+    std::cout << "Filename: " << filename << std::endl;
 
     // Open file to read
     try {
-        fileToRead.open(filename);
-        std::cout << "-> " << filename << " opened for reading!" << std::endl;
-    } catch (int e) {
+        fileToRead.open(filename + ".sp2020");
+    } catch (std::ifstream::failure e) {
         throw 1;
     }
 
     // Read from file and build nodes
     try {
         while (fileToRead >> buffer) {
-            root = insertNode(buffer, root); // Use each 'buffer' instance to build a node
+            hasContent = true;
+            root = insertNode(buffer, root); // Use each 'buffer' instance (word) to build a node
         }
-        fileToRead.close();
-    } catch (int e) {
-        throw 2;
+    } catch (std::ifstream::failure e) {
+        throw 3;
     }
+
+    try {
+        fileToRead.close();
+    } catch (std::ifstream::failure e) {
+        throw 4;
+    }
+
+    if (!hasContent) throw 2;
 
     // Return the root node to the fully build BST
     return root;
@@ -65,10 +75,15 @@ void printInorder(node* node, std::ofstream& outputFile, int level = 0) {
     if (node == NULL) return;
 
     std::string entriesString = buildEntriesString(node->entries);
+    std::string formattedOutput = std::string(level * 2, ' ') + std::to_string(level) + ": " + node->base + "- " + entriesString + '\n';
 
     printInorder(node->left, outputFile, level + 1);
-    std::cout << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
-    outputFile << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
+    std::cout << formattedOutput;
+    try {
+        outputFile << formattedOutput;
+    } catch (std::ofstream::failure e) {
+        throw 5;
+    }
     printInorder(node->right, outputFile, level + 1);
 }
 
@@ -76,47 +91,87 @@ void printPostorder(node* node, std::ofstream& outputFile, int level = 0) {
     if (node == NULL) return;
 
     std::string entriesString = buildEntriesString(node->entries);
+    std::string formattedOutput = std::string(level * 2, ' ') + std::to_string(level) + ": " + node->base + "- " + entriesString + '\n';
 
     printPostorder(node->left, outputFile, level + 1);
     printPostorder(node->right, outputFile, level + 1);
-    std::cout << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
-    outputFile << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
+    std::cout << formattedOutput;
+    try {
+        outputFile << formattedOutput;
+    } catch (std::ofstream::failure e) {
+        throw 5;
+    }
 }
 
 void printPreorder(node* node, std::ofstream& outputFile, int level = 0) {
     if (node == NULL) return;
 
     std::string entriesString = buildEntriesString(node->entries);
+    std::string formattedOutput = std::string(level * 2, ' ') + std::to_string(level) + ": " + node->base + "- " + entriesString + '\n';
 
-    std::cout << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
-    outputFile << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
+    std::cout << formattedOutput;
+    try {
+        outputFile << formattedOutput;
+    } catch (std::ofstream::failure e) {
+        throw 5;
+    }
     printPreorder(node->left, outputFile, level + 1);
     printPreorder(node->right, outputFile, level + 1);
 }
 
 void processInorder(node* node, std::string fileName) {
     std::string outputFileName = fileName + ".inorder";
-    std::ofstream file(outputFileName);
+    std::ofstream file;
+
+    try {
+        file.open(outputFileName);
+    } catch (std::ofstream::failure e) {
+        throw 1;
+    }
 
     printInorder(node, file);
 
-    file.close();
+    try {
+        file.close();
+    } catch (std::ofstream::failure e) {
+        throw 4;
+    }
 }
 
 void processPostorder(node* node, std::string fileName) {
     std::string outputFileName = fileName + ".postorder";
-    std::ofstream file(outputFileName);
+    std::ofstream file;
+
+    try {
+        file.open(outputFileName);
+    } catch (std::ofstream::failure e) {
+        throw 1;
+    }
 
     printPostorder(node, file);
 
-    file.close();
+    try {
+        file.close();
+    } catch (std::ofstream::failure e) {
+        throw 4;
+    }
 }
 
 void processPreorder(node* node, std::string fileName) {
     std::string outputFileName = fileName + ".preorder";
-    std::ofstream file(outputFileName);
+    std::ofstream file;
+
+    try {
+        file.open(outputFileName);
+    } catch (std::ofstream::failure e) {
+        throw 1;
+    }
 
     printPreorder(node, file);
 
-    file.close();
+    try {
+        file.close();
+    } catch (std::ofstream::failure e) {
+        throw 4;
+    }
 }

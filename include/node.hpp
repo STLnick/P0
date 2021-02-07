@@ -1,6 +1,6 @@
-#ifndef NODE_H
-#define NODE_H
+#ifndef NODE_HPP
+#define NODE_HPP
 
 void node();
 
-#endif // !NODE_H
+#endif // !NODE_HPP

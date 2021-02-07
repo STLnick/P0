@@ -1,6 +1,6 @@
-#ifndef PRINT_INORDER_H
-#define PRINT_INORDER_H
+#ifndef PRINT_INORDER_HPP
+#define PRINT_INORDER_HPP
 
 void printInorder();
 
-#endif // !PRINT_INORDER_H
+#endif // !PRINT_INORDER_HPP

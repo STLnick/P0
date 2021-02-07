@@ -1,6 +1,6 @@
-#ifndef PRINT_POSTORDER_H
-#define PRINT_POSTORDER_H
+#ifndef PRINT_POSTORDER_HPP
+#define PRINT_POSTORDER_HPP
 
 void printPostorder();
 
-#endif // !PRINT_POSTORDER_H
+#endif // !PRINT_POSTORDER_HPP

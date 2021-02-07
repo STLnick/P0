@@ -1,6 +1,6 @@
-#ifndef SHOWHELP_H
-#define SHOWHELP_H
+#ifndef SHOWHELP_HPP
+#define SHOWHELP_HPP
 
 void showHelp();
 
-#endif // !SHOWHELP_H
+#endif // !SHOWHELP_HPP

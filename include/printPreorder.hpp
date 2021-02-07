@@ -1,6 +1,6 @@
-#ifndef PRINT_PREORDER_H
-#define PRINT_PREORDER_H
+#ifndef PRINT_PREORDER_HPP
+#define PRINT_PREORDER_HPP
 
 void printPreorder();
 
-#endif // !PRINT_PREORDER_H
+#endif // !PRINT_PREORDER_HPP

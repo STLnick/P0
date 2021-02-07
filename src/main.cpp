@@ -47,6 +47,7 @@ int main(int argc, char **argv) {
         }
 
         tempFile.close();
+        std::cout << "-> File closed!" << std::endl;
 
         fileNameToRead = "temp.txt";
     } else if (argc == 2) {
@@ -101,6 +102,7 @@ int main(int argc, char **argv) {
 //    printInorder(root);
 //    printPostorder(root);
     myFile.close();
+    std::cout << "-> File closed!" << std::endl;
     return 0;
 }
 

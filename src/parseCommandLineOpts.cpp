@@ -5,8 +5,6 @@
 int parseCommandLineOpts(int argc, char **argv)
 {
   int opt;
-  bool shouldTerminate;
-
   opterr = 0;
 
   while ((opt = getopt(argc, argv, "h")) != -1)
@@ -15,13 +13,12 @@ int parseCommandLineOpts(int argc, char **argv)
     {
     case 'h':
       showHelp();
-      shouldTerminate = true;
-      break;
+      return -1;
     case '?':
       std::cerr << "Unknown option: '" << char(optopt) << "'!" << std::endl;
-      shouldTerminate = true;
-      break;
+      return -1;
     }
   }
-  return shouldTerminate ? -1 : 0;
+
+  return 0;
 }

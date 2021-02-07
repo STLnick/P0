@@ -50,13 +50,20 @@ int main(int argc, char **argv) {
         fileNameToRead = "output";
     /*  ./P0 filename  */
     } else if (argc == 2) {
-        // TODO: Finalize the logic for having the correct file / file extension
         fileNameToRead = argv[1];
+        int dotIndex = fileNameToRead.find('.');
+
         // IF this filename has a '.' -> make sure the extension is sp2020 and just store filename no extension
+        if (dotIndex != std::string::npos) {
+            std::string fileExt = fileNameToRead.substr(dotIndex, 1);
 
-        // ELSE IF this filename has no extension -> add '.sp2020'
+            if (fileExt != ".sp2020") {
+                std::cerr << "Incorrect file type provided - must use file extension '.sp2020'" << std::endl;
+                return -1;
+            }
 
-        //fileNameToRead += ".sp2020";
+            fileNameToRead.erase((size_t) dotIndex);
+        }
     } else {
         std::cout << "Incorrect invocation of program! Try again or execute './P0 -h' to view the help info"
                   << std::endl;

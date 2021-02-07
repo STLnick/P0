@@ -3,8 +3,8 @@
 
 #include "node.hpp"
 
-void tree();
-node* buildTree(std::fstream *file);
+node* buildTree(std::string filename);
+void printInorder(node* node, int level = 0);
 void printInorder(node* tree);
 void printPostorder(node* tree);
 void printPreorder(node* tree);

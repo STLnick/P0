@@ -9,7 +9,6 @@
 int parseCommandLineOpts(int argc, char **argv);
 
 int main(int argc, char **argv) {
-    std::fstream myFile;
     std::string buffer;
     std::string fileNameToRead;
 
@@ -89,7 +88,8 @@ int main(int argc, char **argv) {
     // Here in main()...
 
     /* 2. Build the Tree */
-    // TODO - outsideFunction()
+    node *root = NULL;
+        root = buildTree(fileNameToRead);
 
     /* 3. Traverse the tree 3 different ways */
     // TODO - outsideFunction() (x3)

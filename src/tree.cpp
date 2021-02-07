@@ -1,11 +1,26 @@
 #include <iostream>
 #include "node.hpp"
 
-void tree() {
+node* insertNode(std::string str, node* treeNode) {
+    std::string strBase = str.substr(0, 2);
 
-    std::cout << "tree.cpp" << std::endl;
+    // TODO: IF str already exists in 'entries' do nothing!!!
 
-    // TODO: Start with the tree root
+    if(treeNode == NULL) {
+        treeNode = new node;
+        treeNode->base = strBase;
+        treeNode->entries.push_back(str);
+        treeNode->left = treeNode->right = NULL;
+    } else if (strBase == treeNode->base) {
+        treeNode->entries.push_back(str);
+    } else if(strBase < treeNode->base) {
+        treeNode->left = insertNode(str, treeNode->left);
+    } else if(strBase > treeNode->base) {
+        treeNode->right = insertNode(str, treeNode->right);
+    }
+
+    return treeNode;
+}
 
     // TODO: Using all the input from the file we will build the tree
 

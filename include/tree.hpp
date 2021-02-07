@@ -5,9 +5,8 @@
 
 node* buildTree(std::string filename);
 void printInorder(node* node, int level = 0);
-void printInorder(node* tree);
-void printPostorder(node* tree);
-void printPreorder(node* tree);
+void printPostorder(node* node, int level = 0);
+void printPreorder(node* node, int level = 0);
 
 
 #endif // !TREE_HPP

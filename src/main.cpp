@@ -4,9 +4,6 @@
 #include <unistd.h>
 #include "node.hpp"
 #include "parseCommandLineOpts.hpp"
-#include "printPreorder.hpp"
-#include "printInorder.hpp"
-#include "printPostorder.hpp"
 #include "tree.hpp"
 
 int parseCommandLineOpts(int argc, char **argv);

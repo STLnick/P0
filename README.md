@@ -2,7 +2,6 @@
 
 **Version Control**:
 GitHub repo: https://github.com/STLnick/P0
-(private repo but all commits are logged below)
 
 **To run the program**:
 First run 'make' in the root of the project to build 'P0'.
@@ -19,7 +18,12 @@ The executable is truly built and placed in `/bin`, however, a symlink will be a
 ./P0 -h -> help
 
 **What Works**:
+- Takes command line arguments, parses correctly and errors when appropriate
+- Builds the binary search tree
+- Performs the three traversals
+- Outputs to console and to three files
 
 **What Doesn't Work**:
+[Everything works as far as my testing indicated]
 
 **Commit Log**:

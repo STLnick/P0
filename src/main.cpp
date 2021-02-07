@@ -11,58 +11,77 @@
 
 int parseCommandLineOpts(int argc, char **argv);
 
-int main(int argc, char **argv)
-{
-  FILE *fptr = nullptr;
-  char buffer[100];
-  char fileName[50];
-  char str[20];
+int main(int argc, char **argv) {
+    std::fstream myFile;
+    std::string buffer;
+    std::string fileNameToRead;
 
-  if (parseCommandLineOpts(argc, argv) == -1)
-    return -1;
-
-  if (argc == 1) /*  NOTE - ./P0 or ./P0 < filename  */
-  {
-    strcpy(str, "- Keyboard - ");
-
-    fptr = fopen("temp.txt", "w");
-    if (fptr == NULL)
-      perror("Error opening file!");
-    else
-    {
-      fputs(str, fptr);
+    // Parse Command Line Options
+    if (parseCommandLineOpts(argc, argv) == -1) {
+        std::cout << "Invalid Usage - Terminating" << std::endl;
+        return -1;
     }
 
-    int cnt = 0;
-    while (std::cin >> buffer)
-    {
-      // if there is file input!
-      std::cout << cnt << " " << buffer;
-      cnt++;
+    // Read in input if needed and set the filename to be read depending on arguments
+    if (argc == 1) /*  ./P0 or ./P0 < filename  */ {
+        std::fstream tempFile;
+        // Open temp file to hold user input or redirected file input
+        try {
+            tempFile.open("temp.txt");
+            std::cout << "-> File opened for writing!" << std::endl;
+        }
+        catch (int e) {
+            std::cerr << "Failed to open the temp file for writing!" << std::endl;
+            return -1;
+        }
+
+        std::cout
+                << "Preparing to read in input (if using keyboard type "
+                   "'ctrl + d' on *nix systems and 'ctrl + z' for Windows to finish)"
+                << std::endl;
+
+        // While there is input from user/file write it to new file
+        try {
+            while (std::cin >> buffer) {
+                tempFile << buffer << std::endl;
+            }
+        } catch (int e) {
+            std::cerr << "Error while reading from buffer and writing to file!" << std::endl;
+        }
+
+        tempFile.close();
+
+        fileNameToRead = "temp.txt";
+    } else if (argc == 2) {
+        int i;
+        // NOTE: Just for testing purposes - remove before submission!
+        for (i = 0; i < argc; i++) {
+            std::cout << "arg" << i << " -> " << argv[i] << std::endl;
+        }
+        fileNameToRead = argv[1];
+        //fileNameToRead += ".sp2020";
+    } else {
+        std::cout << "Incorrect invocation of program! Try again or execute './P0 -h' to view the help info"
+                  << std::endl;
+        return -1;
     }
 
-    // TODO - Read in input from keyboard until simulated EOF
-
-    // TODO - Write all user input to file
-
-    // TODO - Point file pointer at newly created file
-
-    strcpy(fileName, "temp.txt");
-    fclose(fptr);
-  }
-  else if (argc == 2) /*  ./P0 filename  */
-  {
-    int i = 0;
-    for (; i < argc; i++)
-    {
-      std::cout << "arg" << i << " -> " << argv[i] << std::endl;
+    // Open file to read
+    try {
+        myFile.open(fileNameToRead, std::fstream::in);
+        std::cout << "-> File opened for reading!" << std::endl;
     }
-    //strcpy(fileName, "temp.txt");
-  }
+    catch (int e) {
+        std::cerr << "Failed to open the file for reading!" << std::endl;
+        return -1;
+    }
 
-  // TODO - If a file argument was provided then point file pointer at that instead - rest of code is same
-
-  std::cout << str << std::endl;
+    // Read from file
+    std::cout << "- - - - - " << fileNameToRead << " - - - - -" << std::endl;
+    while (myFile >> buffer) {
+        std::cout << buffer << std::endl;
+    }
+    std::cout << "- - - - - - - - - - - - - - - - -" << std::endl;
 
     /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /* !! The 3 Main Tasks as described by Mark in Project description */

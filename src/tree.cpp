@@ -64,12 +64,23 @@ std::string buildEntriesString(std::vector<std::string> entries) {
 }
 
 void printInorder(node* node, int level = 0) {
-    std::cout << "printInorder.cpp - level: " << level << std::endl;
+    if (node == NULL) return;
 
+    std::string entriesString = buildEntriesString(node->entries);
+
+    printInorder(node->left, level + 1);
+    std::cout << std::string(level * 2, ' ') << level << ": " << entriesString << std::endl;
+    printInorder(node->right, level + 1);
 }
 
 void printPostorder(node* node, int level = 0) {
-    std::cout << "printPostorder.cpp - level: " << level << std::endl;
+    if (node == NULL) return;
+
+    std::string entriesString = buildEntriesString(node->entries);
+
+    printPostorder(node->left, level + 1);
+    printPostorder(node->right, level + 1);
+    std::cout << std::string(level * 2, ' ') << level << ": " << entriesString << std::endl;
 }
 
 void printPreorder(node* node, int level = 0) {
@@ -77,9 +88,7 @@ void printPreorder(node* node, int level = 0) {
 
     std::string entriesString = buildEntriesString(node->entries);
 
-    printf("%*c%d: ", level * 2, ' ', level);
-    std::cout << entriesString << std::endl;
-
+    std::cout << std::string(level * 2, ' ') << level << ": " << entriesString << std::endl;
     printPreorder(node->left, level + 1);
     printPreorder(node->right, level + 1);
 }

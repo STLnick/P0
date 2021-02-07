@@ -20,7 +20,8 @@ int main(int argc, char **argv) {
     }
 
     // Read in input if needed and set the filename to be read depending on arguments
-    if (argc == 1) /*  ./P0 or ./P0 < filename  */ {
+    /*  ./P0 or ./P0 < filename  */
+    if (argc == 1) {
         std::fstream tempFile;
         // Open temp file to hold user input or redirected file input
         try {
@@ -50,39 +51,20 @@ int main(int argc, char **argv) {
         std::cout << "-> File closed!" << std::endl;
 
         fileNameToRead = "temp.txt";
+    /*  ./P0 filename  */
     } else if (argc == 2) {
-        int i;
-        // NOTE: Just for testing purposes - remove before submission!
-        for (i = 0; i < argc; i++) {
-            std::cout << "arg" << i << " -> " << argv[i] << std::endl;
-        }
+        // TODO: Finalize the logic for having the correct file / file extension
         fileNameToRead = argv[1];
+        // IF this filename has a '.' -> make sure the extension is sp2020
+
+        // ELSE IF this filename has no extension -> add '.sp2020'
+
         //fileNameToRead += ".sp2020";
     } else {
         std::cout << "Incorrect invocation of program! Try again or execute './P0 -h' to view the help info"
                   << std::endl;
         return -1;
     }
-
-    // TESTING WITH OUTPUT BY OPENING/READING FILE - Open file to read
-//    try {
-//        myFile.open(fileNameToRead, std::fstream::in);
-//        std::cout << "-> File opened for reading!" << std::endl;
-//    }
-//    catch (int e) {
-//        std::cerr << "Failed to open the file for reading!" << std::endl;
-//        return -1;
-//    }
-
-    // Read from file
-//    std::cout << "- - - - - " << fileNameToRead << " - - - - -" << std::endl;
-//    while (myFile >> buffer) {
-//        std::cout << buffer << std::endl;
-//    }
-//    std::cout << "- - - - - - - - - - - - - - - - -" << std::endl;
-
-
-
 
     /* 2. Build the Tree */
     node *root = NULL;
@@ -103,27 +85,12 @@ int main(int argc, char **argv) {
 
 
     /* 3. Traverse the tree 3 different ways */
+    std::cout << std::endl << "- - - printPreorder() - - -" << std::endl;
     printPreorder(root);
+    std::cout << std::endl << "- - - printInorder() - - -" << std::endl;
     printInorder(root);
+    std::cout << std::endl << "- - - printPostorder() - - -" << std::endl;
     printPostorder(root);
 
     return 0;
 }
-
-// TODO: Build out these required functions per Project Requirements
-/*
- * buildTree()
- * printInorder()   -> Process Left - Process Root - Process Right
- * printPreorder()  -> Process root - Process children left to right
- * printPostorder() -> Process children left to right - Process root
- */
-
-// FROM MARK IN THE PROJECT DESCRIPTION
-//Ideas for printing tree with indentations
-//static void printPreorder(nodeType *rootP,int level) {
-//    if (rootP == NULL) return;
-//    printf("%*c%d:%-9s ", level * 2, ' ', level, NodeId.info); // assume some info printed as string
-//    printf("\n");
-//    printPreorder(rootP->left, level + 1);
-//    printPreorder(rootP->right, level + 1);
-//}

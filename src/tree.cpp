@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "node.hpp"
 
 node* insertNode(std::string str, node* treeNode) {
@@ -22,32 +23,62 @@ node* insertNode(std::string str, node* treeNode) {
     return treeNode;
 }
 
-    // TODO: Using all the input from the file we will build the tree
+node* buildTree(std::string filename) {
+    std::fstream fileToRead;
+    std::string buffer;
+    node* root = NULL;
 
-    // TODO: For each 'string' in 'file_input' tree.insert()
+    // Open file to read
+    try {
+        fileToRead.open(filename, std::fstream::in);
+        std::cout << "-> " << filename << " opened for reading!" << std::endl;
+    } catch (int e) {
+        throw 1;
+    }
 
-    // TODO: Return the root node to the fully build BST
+    // Read from file and build nodes
+    try {
+        while (fileToRead >> buffer) {
+            // use each 'buffer' instance to build a node
+            root = insertNode(buffer, root);
+        }
 
-}
+        fileToRead.close();
+    } catch (int e) {
+        throw 2;
+    }
 
-node* buildTree(std::fstream *file) {
-    std::cout << "buildTree() fired!" << std::endl;
-    node* root;
-    root.base = "BASE";
+    // Return the root node to the fully build BST
     return root;
 }
 
-void printInorder(node* tree)
-{
-    std::cout << "printInorder.cpp" << std::endl;
+std::string buildEntriesString(std::vector<std::string> entries) {
+    std::string entriesString = "";
+
+    for (std::vector<std::string>::iterator it = entries.begin(); it != entries.end(); ++it) {
+        entriesString += *it + ' ';
+    }
+
+    return entriesString;
 }
 
-void printPostorder(node* tree)
-{
-    std::cout << "printPostorder.cpp" << std::endl;
+void printInorder(node* node, int level = 0) {
+    std::cout << "printInorder.cpp - level: " << level << std::endl;
+
 }
 
-void printPreorder(node* tree)
-{
-    std::cout << "printPreorder.cpp" << std::endl;
+void printPostorder(node* node, int level = 0) {
+    std::cout << "printPostorder.cpp - level: " << level << std::endl;
+}
+
+void printPreorder(node* node, int level = 0) {
+    if (node == NULL) return;
+
+    std::string entriesString = buildEntriesString(node->entries);
+
+    printf("%*c%d: ", level * 2, ' ', level);
+    std::cout << entriesString << std::endl;
+
+    printPreorder(node->left, level + 1);
+    printPreorder(node->right, level + 1);
 }

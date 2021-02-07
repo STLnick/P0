@@ -86,6 +86,20 @@ int main(int argc, char **argv) {
 
     /* 2. Build the Tree */
     node *root = NULL;
+    try {
+        root = buildTree(fileNameToRead);
+    } catch (int e) {
+        switch (e) {
+            case 1:
+                std::cerr << "Failed to open the file for reading!" << std::endl;
+                break;
+            case 2:
+                std::cerr << "Failed while trying to read from the file!" << std::endl;
+                break;
+            default:
+                std::cerr << "Error Occurred - unprocessed exception thrown!" << std::endl;
+        }
+    }
         root = buildTree(fileNameToRead);
 
     /* 3. Traverse the tree 3 different ways */

@@ -25,13 +25,13 @@ node* insertNode(std::string str, node* treeNode) {
 }
 
 node* buildTree(std::string filename) {
-    std::fstream fileToRead;
-    std::string buffer;
-    node* root = NULL;
+    std::ifstream fileToRead; // File to read strings from
+    std::string buffer;       // String buffer to hold data read from file
+    node* root = NULL;        // Root node of the Binary Search Tree
 
     // Open file to read
     try {
-        fileToRead.open(filename, std::fstream::in);
+        fileToRead.open(filename);
         std::cout << "-> " << filename << " opened for reading!" << std::endl;
     } catch (int e) {
         throw 1;
@@ -40,10 +40,8 @@ node* buildTree(std::string filename) {
     // Read from file and build nodes
     try {
         while (fileToRead >> buffer) {
-            // use each 'buffer' instance to build a node
-            root = insertNode(buffer, root);
+            root = insertNode(buffer, root); // Use each 'buffer' instance to build a node
         }
-
         fileToRead.close();
     } catch (int e) {
         throw 2;
@@ -63,32 +61,62 @@ std::string buildEntriesString(std::vector<std::string> entries) {
     return entriesString;
 }
 
-void printInorder(node* node, int level = 0) {
+void printInorder(node* node, std::ofstream& outputFile, int level = 0) {
     if (node == NULL) return;
 
     std::string entriesString = buildEntriesString(node->entries);
 
-    printInorder(node->left, level + 1);
-    std::cout << std::string(level * 2, ' ') << level << ": " << entriesString << std::endl;
-    printInorder(node->right, level + 1);
+    printInorder(node->left, outputFile, level + 1);
+    std::cout << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
+    outputFile << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
+    printInorder(node->right, outputFile, level + 1);
 }
 
-void printPostorder(node* node, int level = 0) {
+void printPostorder(node* node, std::ofstream& outputFile, int level = 0) {
     if (node == NULL) return;
 
     std::string entriesString = buildEntriesString(node->entries);
 
-    printPostorder(node->left, level + 1);
-    printPostorder(node->right, level + 1);
-    std::cout << std::string(level * 2, ' ') << level << ": " << entriesString << std::endl;
+    printPostorder(node->left, outputFile, level + 1);
+    printPostorder(node->right, outputFile, level + 1);
+    std::cout << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
+    outputFile << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
 }
 
-void printPreorder(node* node, int level = 0) {
+void printPreorder(node* node, std::ofstream& outputFile, int level = 0) {
     if (node == NULL) return;
 
     std::string entriesString = buildEntriesString(node->entries);
 
-    std::cout << std::string(level * 2, ' ') << level << ": " << entriesString << std::endl;
-    printPreorder(node->left, level + 1);
-    printPreorder(node->right, level + 1);
+    std::cout << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
+    outputFile << std::string(level * 2, ' ') << level << ": " << node->base << "- " << entriesString << std::endl;
+    printPreorder(node->left, outputFile, level + 1);
+    printPreorder(node->right, outputFile, level + 1);
+}
+
+void processInorder(node* node, std::string fileName) {
+    std::string outputFileName = fileName + ".inorder";
+    std::ofstream file(outputFileName);
+
+    printInorder(node, file);
+
+    file.close();
+}
+
+void processPostorder(node* node, std::string fileName) {
+    std::string outputFileName = fileName + ".postorder";
+    std::ofstream file(outputFileName);
+
+    printPostorder(node, file);
+
+    file.close();
+}
+
+void processPreorder(node* node, std::string fileName) {
+    std::string outputFileName = fileName + ".preorder";
+    std::ofstream file(outputFileName);
+
+    printPreorder(node, file);
+
+    file.close();
 }

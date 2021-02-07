@@ -6,8 +6,6 @@
 #include "parseCommandLineOpts.hpp"
 #include "tree.hpp"
 
-int parseCommandLineOpts(int argc, char **argv);
-
 int main(int argc, char **argv) {
     std::string buffer;
     std::string fileNameToRead;
@@ -22,11 +20,10 @@ int main(int argc, char **argv) {
     // Read in input if needed and set the filename to be read depending on arguments
     /*  ./P0 or ./P0 < filename  */
     if (argc == 1) {
-        std::fstream tempFile;
+        std::ofstream tempFile;
         // Open temp file to hold user input or redirected file input
         try {
-            tempFile.open("temp.txt");
-            std::cout << "-> File opened for writing!" << std::endl;
+            tempFile.open("output");
         }
         catch (int e) {
             std::cerr << "Failed to open the temp file for writing!" << std::endl;
@@ -48,14 +45,13 @@ int main(int argc, char **argv) {
         }
 
         tempFile.close();
-        std::cout << "-> File closed!" << std::endl;
 
-        fileNameToRead = "temp.txt";
+        fileNameToRead = "output";
     /*  ./P0 filename  */
     } else if (argc == 2) {
         // TODO: Finalize the logic for having the correct file / file extension
         fileNameToRead = argv[1];
-        // IF this filename has a '.' -> make sure the extension is sp2020
+        // IF this filename has a '.' -> make sure the extension is sp2020 and just store filename no extension
 
         // ELSE IF this filename has no extension -> add '.sp2020'
 
@@ -85,12 +81,14 @@ int main(int argc, char **argv) {
 
 
     /* 3. Traverse the tree 3 different ways */
-    std::cout << std::endl << "- - - printPreorder() - - -" << std::endl;
-    printPreorder(root);
-    std::cout << std::endl << "- - - printInorder() - - -" << std::endl;
-    printInorder(root);
-    std::cout << std::endl << "- - - printPostorder() - - -" << std::endl;
-    printPostorder(root);
+    std::cout << std::endl << "- - - Preorder - - -" << std::endl;
+    processPreorder(root, fileNameToRead);
+
+    std::cout << std::endl << "- - - Inorder - - -" << std::endl;
+    processInorder(root, fileNameToRead);
+
+    std::cout << std::endl << "- - - Postorder - - -" << std::endl;
+    processPostorder(root, fileNameToRead);
 
     return 0;
 }

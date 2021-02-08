@@ -30,8 +30,6 @@ node* buildTree(std::string filename) {
     node* root = NULL;        // Root node of the Binary Search Tree
     bool hasContent = false;  // Flag to indicate if file had content
 
-    std::cout << "Filename: " << filename << std::endl;
-
     // Open file to read
     try {
         fileToRead.open(filename + ".sp2020");

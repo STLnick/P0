@@ -2,15 +2,12 @@
 #include <unistd.h>
 #include "showHelp.hpp"
 
-int parseCommandLineOpts(int argc, char **argv)
-{
+int parseCommandLineOpts(int argc, char **argv) {
   int opt;
   opterr = 0;
 
-  while ((opt = getopt(argc, argv, "h")) != -1)
-  {
-    switch (opt)
-    {
+  while ((opt = getopt(argc, argv, "h")) != -1) {
+    switch (opt) {
     case 'h':
       showHelp();
       return -1;

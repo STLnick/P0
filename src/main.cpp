@@ -13,9 +13,12 @@ int main(int argc, char **argv) {
 
     /* 1. Process Command Arguments */
     // Parse Command Line Options
-    if (parseCommandLineOpts(argc, argv) == -1) {
-        std::cout << "Invalid Usage - Terminating" << std::endl;
-        return -1;
+    switch (parseCommandLineOpts(argc, argv)) {
+        case -1:
+            std::cout << "Invalid Usage - Terminating" << std::endl;
+            return -1;
+        case 1:
+            return 0;
     }
 
     // Read in input if needed and set the filename to be read depending on arguments

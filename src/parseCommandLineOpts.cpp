@@ -10,7 +10,7 @@ int parseCommandLineOpts(int argc, char **argv) {
     switch (opt) {
     case 'h':
       showHelp();
-      return -1;
+      return 1;
     case '?':
       std::cerr << "Unknown option: '" << char(optopt) << "'!" << std::endl;
       return -1;

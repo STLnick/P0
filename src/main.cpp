@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
         std::ofstream tempFile;
         // Open temp file to hold user input or redirected file input
         try {
-            tempFile.open("output");
+            tempFile.open("output.sp2020");
         }
         catch (int e) {
             std::cerr << "Failed to open the temp file for writing!" << std::endl;
@@ -54,15 +54,15 @@ int main(int argc, char **argv) {
         int dotIndex = fileNameToRead.find('.');
 
         // IF this filename has a '.' -> make sure the extension is sp2020 and just store filename no extension
-        if (dotIndex != std::string::npos) {
+        if (dotIndex != -1) {
             std::string fileExt = fileNameToRead.substr(dotIndex, 1);
 
-            if (fileExt != ".sp2020") {
+            if (fileExt.compare(".sp2020") != 0) {
                 std::cerr << "Incorrect file type provided - must use file extension '.sp2020'" << std::endl;
                 return -1;
             }
 
-            fileNameToRead.erase((size_t) dotIndex);
+            fileNameToRead.erase(dotIndex);
         }
     } else {
         std::cout << "Incorrect invocation of program! Try again or execute './P0 -h' to view the help info"

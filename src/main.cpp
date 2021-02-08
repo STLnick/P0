@@ -90,5 +90,10 @@ int main(int argc, char **argv) {
     std::cout << std::endl << "- - - Postorder - - -" << std::endl;
     processPostorder(root, fileNameToRead);
 
+    std::cout << std::endl << "Generated files: " << std::endl
+              << "\t[ " << fileNameToRead << ".preorder, "
+              << fileNameToRead << ".inorder, "
+              << fileNameToRead << ".postorder ]" << std::endl;
+
     return 0;
 }

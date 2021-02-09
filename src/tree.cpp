@@ -1,6 +1,8 @@
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include "node.hpp"
+#include "SSTR.hpp"
 
 node* insertNode(std::string str, node* treeNode) {
     std::string strBase = str.substr(0, 2);
@@ -12,7 +14,7 @@ node* insertNode(std::string str, node* treeNode) {
         treeNode->left = treeNode->right = NULL;
     } else if (strBase == treeNode->base) {
         // Only push str if it's not in vector already
-        if (std::find(treeNode->entries.begin(), treeNode->entries.end(), str) == treeNode->entries.end()) {
+        if (std::find(treeNode->entries.begin(), treeNode->entries.end(), str.c_str()) == treeNode->entries.end()) {
             treeNode->entries.push_back(str);
         }
     } else if(strBase < treeNode->base) {
@@ -25,14 +27,16 @@ node* insertNode(std::string str, node* treeNode) {
 }
 
 node* buildTree(std::string filename) {
-    std::ifstream fileToRead; // File to read strings from
-    std::string buffer;       // String buffer to hold data read from file
-    node* root = NULL;        // Root node of the Binary Search Tree
-    bool hasContent = false;  // Flag to indicate if file had content
+    std::ifstream fileToRead;    // File to read strings from
+    std::string buffer;          // String buffer to hold data read from file
+    std::string filenameWithExt; // Filename with file extension
+    node* root = NULL;           // Root node of the Binary Search Tree
+    bool hasContent = false;     // Flag to indicate if file had content
 
     // Open file to read
     try {
-        fileToRead.open(filename + ".sp2020");
+	filenameWithExt = filename + ".sp2020";
+        fileToRead.open(filenameWithExt.c_str());
     } catch (std::ifstream::failure e) {
         throw 1;
     }
@@ -73,7 +77,7 @@ void printInorder(node* node, std::ofstream& outputFile, int level = 0) {
     if (node == NULL) return;
 
     std::string entriesString = buildEntriesString(node->entries);
-    std::string formattedOutput = std::string(level * 2, ' ') + std::to_string(level) + ": " + node->base + "- " + entriesString + '\n';
+    std::string formattedOutput = std::string(level * 2, ' ') + SSTR(level) + ": " + node->base + "- " + entriesString + '\n';
 
     printInorder(node->left, outputFile, level + 1);
     std::cout << formattedOutput;
@@ -89,7 +93,7 @@ void printPostorder(node* node, std::ofstream& outputFile, int level = 0) {
     if (node == NULL) return;
 
     std::string entriesString = buildEntriesString(node->entries);
-    std::string formattedOutput = std::string(level * 2, ' ') + std::to_string(level) + ": " + node->base + "- " + entriesString + '\n';
+    std::string formattedOutput = std::string(level * 2, ' ') + SSTR(level) + ": " + node->base + "- " + entriesString + '\n';
 
     printPostorder(node->left, outputFile, level + 1);
     printPostorder(node->right, outputFile, level + 1);
@@ -105,7 +109,7 @@ void printPreorder(node* node, std::ofstream& outputFile, int level = 0) {
     if (node == NULL) return;
 
     std::string entriesString = buildEntriesString(node->entries);
-    std::string formattedOutput = std::string(level * 2, ' ') + std::to_string(level) + ": " + node->base + "- " + entriesString + '\n';
+    std::string formattedOutput = std::string(level * 2, ' ') + SSTR(level) + ": " + node->base + "- " + entriesString + '\n';
 
     std::cout << formattedOutput;
     try {
@@ -122,7 +126,7 @@ void processInorder(node* node, std::string fileName) {
     std::ofstream file;
 
     try {
-        file.open(outputFileName);
+        file.open(outputFileName.c_str());
     } catch (std::ofstream::failure e) {
         throw 1;
     }
@@ -141,7 +145,7 @@ void processPostorder(node* node, std::string fileName) {
     std::ofstream file;
 
     try {
-        file.open(outputFileName);
+        file.open(outputFileName.c_str());
     } catch (std::ofstream::failure e) {
         throw 1;
     }
@@ -160,7 +164,7 @@ void processPreorder(node* node, std::string fileName) {
     std::ofstream file;
 
     try {
-        file.open(outputFileName);
+        file.open(outputFileName.c_str());
     } catch (std::ofstream::failure e) {
         throw 1;
     }

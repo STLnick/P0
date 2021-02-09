@@ -5,6 +5,7 @@
 #include "node.hpp"
 #include "parseCommandLineOpts.hpp"
 #include "processError.hpp"
+#include "SSTR.hpp"
 #include "tree.hpp"
 
 int main(int argc, char **argv) {
@@ -58,9 +59,10 @@ int main(int argc, char **argv) {
 
         // IF this filename has a '.' -> make sure the extension is sp2020 and just store filename no extension
         if (dotIndex != -1) {
-            std::string fileExt = fileNameToRead.substr(dotIndex, 1);
-
-            if (fileExt.compare(".sp2020") != 0) {
+            std::string fileExt = fileNameToRead.substr(dotIndex);
+            int result = fileExt.compare(".sp2020");
+            std::cout << "Result: " << SSTR(result) << "  ---  FileExt: " << fileExt << std::endl;
+            if (result != 0) {
                 std::cerr << "Incorrect file type provided - must use file extension '.sp2020'" << std::endl;
                 return -1;
             }

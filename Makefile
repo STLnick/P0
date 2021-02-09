@@ -31,6 +31,6 @@ $(BIN_DIR) $(OBJ_DIR):
 	mkdir -p $@
 
 clean:
-	@$(RM) -rv $(OBJ_DIR) $(BIN_DIR) *.inorder *.postorder *.preorder
+	@$(RM) -rv $(OBJ_DIR) $(BIN_DIR) *.inorder *.postorder *.preorder output.sp2020
 
 -include $(OBJ:.o=.d)

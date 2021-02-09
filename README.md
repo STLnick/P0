@@ -5,7 +5,7 @@ GitHub repo: https://github.com/STLnick/P0
 
 **To run the program**:
 First run 'make' in the root of the project to build 'P0'.
-The executable is truly built and placed in `/bin`, however, a symlink will be available in the root directory too.
+The executable `P0` is built and placed in `/bin`.
 
 **Run command structure**:
 
